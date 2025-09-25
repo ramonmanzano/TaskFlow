@@ -1,0 +1,1 @@
+Soy Ramon y esta actividad es para Oskar trata de saber usar git y sus comandos basicos
