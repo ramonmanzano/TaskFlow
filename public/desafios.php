@@ -343,6 +343,21 @@ $palabra="sometemos";
             }
         }
    
+//Palindromo mejorado 
+    $palabra = "sometemos";
+    $inicio = 0;
+    $fin = 8;
+
+    while ($inicio < $fin) {
+        if ($palabra[$inicio] != $palabra[$fin]) {
+            echo "No es un palíndromo";
+            exit();
+        }
+        $inicio++;
+        $fin--;
+    }
+
+    echo "Es un palíndromo";
 
 ///////EsPrimo
 $numero = 29;
