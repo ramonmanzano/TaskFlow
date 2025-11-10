@@ -1,13 +1,14 @@
 <?php
 function obtenerClasePrioridad($prioridad) {
-    if ($prioridad === 'alta') {
-        return ' priority-alta';
-    } elseif ($prioridad === 'media') {
-        return ' priority-media';
-    } else {
-        return ' priority-baja';
-    }
-}
+ 
+
+return match($prioridad){
+    'alta'=>' prioridad-alta',
+    'media'=>' prioridad-media',
+    'baja'=>' prioridad-baja', 
+    default=>'',
+};
+
 
 function renderizarTarea($tarea) {
     $clases = 'task-item';
@@ -18,6 +19,6 @@ function renderizarTarea($tarea) {
     
     $clases .= obtenerClasePrioridad($tarea['prioridad']);
     
-    return '<li class="' . $clases . '">' . $tarea['titulo'] . '</li>';
+    return '<li class="' . htmlspecialchars($clases) . '">' . htmlspecialchars($tarea['titulo']) . '</li>';
 }
 ?>
