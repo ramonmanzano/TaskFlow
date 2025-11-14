@@ -2,8 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo $pageTitle; ?></title>
-    <style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow</title>
+   <style>
         .task-item {
             padding: 8px;
             margin-bottom: 5px;
@@ -25,4 +26,7 @@
     </style>
 </head>
 <body>
+    <header>
+        <h1>Mi Lista de Tareas</h1>
+    </header>
     <main>

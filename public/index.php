@@ -1,23 +1,46 @@
 <?php
-require_once '../app/functions.php';
 
-$tareas = [
-        ['titulo' => 'Esta es mi tarea 1 ', 'completado' => true, 'prioridad' => 'alta'],
-        ['titulo' => 'Esta es mi tarea 2', 'completado' => true, 'prioridad' => 'alta'],
-        ['titulo' => 'Esta es mi tarea 3', 'completado' => false, 'prioridad' => 'media'],
-        ['titulo' => 'Esta es mi tarea 4', 'completado' => false, 'prioridad' => 'alta'],
-        ['titulo' => 'Esta es mi tarea 5', 'completado' => false, 'prioridad' => 'baja']
+require_once '../app/funciones.php';
+require_once '../app/data.php';
+require_once '../app/controllers/AuthController.php';
+
+$accion = $_GET['accion'] ?? 'login';
+
+switch ($accion) {
+    case 'login':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+
+            if (handleLogin($email, $password, $usuarios_bbdd)) {
+                header('Location: index.php?accion=dashboard');
+                exit;
+            } else { $error = "Credenciales incorrectas.";}
+        }
+
+        include '../app/views/login.view.php';
+        break;
+
+    case 'dashboard':
+        if (!checkAuth()) {
+            header('Location: index.php?accion=login');
+            exit;
+        }
+
+        $tareas = [
+            ['titulo' => 'Implementar Login', 'completado' => true, 'prioridad' => 'alta'],
+            ['titulo' => 'Añadir Pruebas Unitarias', 'completado' => false, 'prioridad' => 'media']
         ];
-                        
-]
-include '../app/views/header.php';
-?>
 
-<h2>Mis Tareas</h2>
-<ul>
-    <?php foreach ($tareas as $tarea): ?>
-        <?php echo renderizarTarea($tarea); ?>
-    <?php endforeach; ?>
-</ul>
+        include '../app/views/tareas.view.php';
+        break;
 
-<?php include '../app/views/footer.php'; ?>
+    case 'logout':
+        handleLogout();
+        break;
+
+    default:
+        http_response_code(404);
+        echo "Error 404: Página no encontrada.";
+        break;
+}
